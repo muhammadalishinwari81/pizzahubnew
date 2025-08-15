@@ -11,7 +11,26 @@ export default function Home() {
 
   useEffect(() => {
     if (status === 'authenticated' && session) {
-      router.push('/dashboard');
+      // Redirect based on role
+      switch (session.user.role) {
+        case 'ADMIN':
+          router.push('/admin');
+          break;
+        case 'MANAGER':
+          router.push('/manager');
+          break;
+        case 'STAFF':
+          router.push('/staff');
+          break;
+        case 'CASHIER':
+          router.push('/cashier');
+          break;
+        case 'CUSTOMER':
+          router.push('/customer');
+          break;
+        default:
+          router.push('/dashboard');
+      }
     }
   }, [status, session, router]);
 

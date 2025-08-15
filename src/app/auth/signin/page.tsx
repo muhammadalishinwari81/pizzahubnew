@@ -27,7 +27,34 @@ export default function SignInPage() {
       if (result?.error) {
         setError('Invalid email or password');
       } else {
-        router.push('/dashboard');
+        // Get the session to check user role
+        const response = await fetch('/api/auth/session');
+        const session = await response.json();
+        
+        if (session?.user?.role) {
+          // Redirect based on role
+          switch (session.user.role) {
+            case 'ADMIN':
+              router.push('/admin');
+              break;
+            case 'MANAGER':
+              router.push('/manager');
+              break;
+            case 'STAFF':
+              router.push('/staff');
+              break;
+            case 'CASHIER':
+              router.push('/cashier');
+              break;
+            case 'CUSTOMER':
+              router.push('/customer');
+              break;
+            default:
+              router.push('/dashboard');
+          }
+        } else {
+          router.push('/dashboard');
+        }
       }
     } catch (error) {
       setError('An error occurred. Please try again.');
