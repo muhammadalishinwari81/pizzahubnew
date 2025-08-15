@@ -1,15 +1,14 @@
 import { ReactNode } from 'react';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
+import { auth } from '@/lib/auth';
 
 interface AdminLayoutProps {
   children: ReactNode;
 }
 
 export default async function AdminLayout({ children }: AdminLayoutProps) {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
   
   if (!session || session.user.role !== 'ADMIN') {
     redirect('/auth/signin');

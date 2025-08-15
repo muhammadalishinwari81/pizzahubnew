@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
+import { auth } from '@/lib/auth';
 import { db } from '@/lib/db';
 import { orders, users, branches } from '@/lib/db/schema';
 import { eq, gte, desc, sql, and } from 'drizzle-orm';
@@ -8,7 +7,7 @@ import { eq, gte, desc, sql, and } from 'drizzle-orm';
 // GET - Fetch analytics data
 export async function GET(request: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
+    const session = await auth();
     
     if (!session || session.user.role !== 'ADMIN') {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
