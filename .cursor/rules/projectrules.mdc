@@ -1,0 +1,39 @@
+---
+alwaysApply: true
+---
+
+# ⚙️ Tech Stack Rules – Multi-Role Web Application
+
+## Core Stack
+- **Frontend:** Next.js (App Router)
+- **Backend:** Next.js API Routes
+- **Authentication & Authorization:** NextAuth (role-based access)
+- **Database:** NeonDB via Drizzle ORM
+- **File/Media Storage:** Cloudinary
+- **Deployment:** Vercel
+- **Push Notifications:** Capacitor Web Push API
+
+## Authentication Rules
+1. All authentication and session management must be implemented with **NextAuth**.
+2. Implement a **Forgot Password** flow:
+   - User submits email via `/auth/forgot-password`.
+   - Send a secure, expiring token link via email.
+   - `/auth/reset-password` page allows password reset with validation.
+3. All protected routes must check authentication status on both client and server.
+4. Use **role-based session objects** to enforce permissions in both API routes and UI.
+
+## Database Rules
+1. All database queries must use **Drizzle ORM** with **NeonDB**.
+2. Schema migrations must be handled through Drizzle migrations.
+
+## File Upload Rules
+- All uploads must be stored in **Cloudinary** with optimized transformations for performance.
+
+## Code Quality Rules
+1. All code must be in **TypeScript** with strict type safety.
+2. Validate all incoming data (client & server) before processing.
+3. Use async/await for all asynchronous operations — no `.then()` chains.
+
+## PWA & Deployment Rules
+1. The app must be responsive, installable as a PWA, and offline-ready where applicable.
+2. Must deploy to **Vercel** without requiring structural changes.
